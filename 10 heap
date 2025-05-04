@@ -1,0 +1,104 @@
+#include <iostream>
+using namespace std;
+class Student 
+{
+public:
+    int* a;
+    int n;
+    Student() 
+	{
+        cout<<"Enter number of students:";
+        cin>>n;
+        a=new int[n];
+        cout<<"Enter marks obtained by each student:\n";
+        for(int i=0;i<n;i++) 
+		{
+            cout<<"Student "<<i+1<<":";
+            cin>>a[i];
+        }
+    }
+
+    void maxHeap(int i, int size) 
+	{
+        int largest=i; 
+		int left=2*i+1;
+		int right=2*i+2;
+        if(left<size && a[left]>a[largest]) 
+		{
+			largest=left;
+		}
+        if(right<size && a[right]>a[largest])
+		{
+        	largest=right;
+		}
+        if(largest!=i) 
+		{
+            swap(a[i], a[largest]);
+            maxHeap(largest, size);
+        }
+    }
+
+    void minHeap(int i,int size) 
+	{
+        int smallest=i,left=2*i+1,right=2*i+2;
+        if(left<size&&a[left]<a[smallest]) 
+		{
+			smallest=left;
+		}
+        if(right<size&& a[right]<a[smallest]) 
+        {
+        	smallest=right;
+		}
+        if (smallest!=i) 
+		{
+            swap(a[i],a[smallest]);
+            minHeap(smallest,size);
+        }
+    }
+
+    void buildMaxHeap() 
+	{
+        for(int i=n/2-1;i>=0;i--) 
+		{
+            maxHeap(i,n);
+        }
+    }
+
+    void buildMinHeap() 
+	{
+        for(int i=n/2-1;i>=0;i--) 
+		{
+            minHeap(i,n);
+        }
+    }
+
+    void findMaxMarks() 
+	{
+        buildMaxHeap();
+        cout<<"Maximum marks obtained:"<<a[0]<<endl;
+    }
+
+    void findMinMarks() 
+	{
+        buildMinHeap();
+        cout<<"Minimum marks obtained:"<<a[0]<<endl;
+    }
+
+    void display() 
+	{
+        cout <<"Marks of the students:\n";
+        for (int i = 0; i < n; ++i) 
+		{
+            cout<<"Student"<<i+1<<":"<<a[i]<<endl;
+        }
+    }
+};
+
+int main()
+{
+    Student s;
+    s.display();
+    s.findMaxMarks();
+    s.findMinMarks();
+    return 0;
+}
