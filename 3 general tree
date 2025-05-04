@@ -2,15 +2,16 @@
 using namespace std;
 struct node
 {   
-    string name;
-    int count;
-    node* child[10]; 
+ public:
+ string name;
+ int count;
+ node* child[10]; 
 };
 class book
 {   
     public:
-        node *nnode,*root;
-        
+        node *nnode,*root,*temp;
+        int ch;
         book()
         {
             root=NULL;
@@ -19,33 +20,31 @@ class book
  
     void creation()
     { 
-	   // int choice;
+	    int choice;
         nnode=new node;
-        cout<<"\n enter the Book name :";
+        cout<<"Enter the Book name:"<<endl;
         cin>>nnode->name;
-        cout<<"\n enter number of chapter :";
+        cout<<"Enter number of chapter:"<<endl;
         cin>>nnode->count;
         for(int i=0;i<nnode->count;i++)
         {
             nnode->child[i]=new node;
-            cout<<"\n enter the chapter name : ";
+            cout<<"Enter the chapter name : ";
             cin>>nnode->child[i]->name;
-            cout<<"\n enter the no of section :";
+            cout<<"Enter the no of section :";
             cin>>nnode->child[i]->count;
             for(int j=0;j<nnode->child[i]->count;j++) 
 			{
                 nnode->child[i]->child[j]=new node;
-                cout<<"\n enter section name :";
+                cout<<"Enter section name :";
                 cin>>nnode->child[i]->child[j]->name;
-                cout<<"\n enter the no of subsection :";
+                cout<<"Enter the no of subsection :";
                 cin>>nnode->child[i]->child[j]->count;
                 for(int k=0;k<nnode->child[i]->child[j]->count;k++) 
 				{
                     nnode->child[i]->child[j]->child[k]=new node;
-                    cout<<"\nenter subsection name :";
+                    cout<<"Enter subsection name :";
                     cin>>nnode->child[i]->child[j]->child[k]->name;
-                    cout<<"\n enter count :";
-                    cin>>nnode->child[i]->child[j]->child[k]->count;
                 }
             }
 	    }
@@ -58,32 +57,36 @@ class book
 void display()
 { 
     cout<<"\n OUTPUT\n";
-    //do{
-        cout<<"\n\t ";
-        cout<<nnode->name<<"\n\t"<<""; 
+    do{
+        cout<<"\n ";
+        cout<<nnode->name;
+        cout<<"\n\t"<<""; 
         for(int i=0;i<nnode->count;i++)
         {
-            cout<<"\n\t\t"<<nnode->child[i]->name<<"\n\t\t"<<"";
+            cout<<"\n\t\t"<<nnode->child[i]->name;
+            cout<<"\n\t\t"<<"";
              
             for(int j=0;j<nnode->child[i]->count;j++) 
 			{
               
-                cout<<"\n\t\t\t"<<nnode->child[i]->child[j]->name;
+                cout<<"\n \t\t\t"<<nnode->child[i]->child[j]->name;
                
              
                 for(int k=0;k<nnode->child[i]->child[j]->count;k++)
 			    {
-                    cout<<"\n\t\t\t\t"<<nnode->child[i]->child[j]->child[k]->name; 
+                    cout<<"\n\t\t\t\t";
+                    cout<<nnode->child[i]->child[j]->child[k]->name;
+                 
                 }
 			}
         }
-   // }while(root==NULL); 
-    }
+    }while(root==NULL); 
+ }
 };
 int main()
 {
-    book b;
-    b.creation();
-    b.display();
+    book ob1;
+    ob1.creation();
+    ob1.display();
 	return 0; 
 }
