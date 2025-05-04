@@ -1,0 +1,162 @@
+#include<iostream>
+using namespace std;
+struct node{
+	node*left,*right;
+	int data;
+};
+class BST{
+	public:
+		node *root;
+		BST()
+		{
+			root=NULL;
+		}
+		void creation()
+		{
+			char ch;
+			do{
+				node*nnode=new node;
+				nnode->left=NULL;
+				nnode->right=NULL;
+				cout<<"enter the data :";
+				cin>>nnode->data;
+				if(root==NULL)
+				{
+					root=nnode;
+				}
+				else{
+					insert(root,nnode);
+				}
+				cout<<"do u want to add more data(y/n):";
+				cin>>ch;
+				
+			}while(ch=='y');
+		}
+		void insert(node*root,node*nnode)
+		{
+			if(nnode->data<=root->data){
+				if(root->left==NULL)
+				{
+					root->left=nnode;
+				}
+				else
+				{
+					insert(root->left,nnode);
+				}
+			}
+			else{
+				if(root->right==NULL)
+				{
+					root->right=nnode;
+				}
+				else
+				{
+					insert(root->right,nnode);
+				}
+			}
+		}
+		void search(node*root,int key,int &flag)
+		{
+			if(root==NULL)
+			{
+				flag=0;
+				return;
+			}
+			if(root->data==key)
+			{
+				flag=1;
+				return;
+			}
+			if(key > root->data)
+			{
+				search(root->left,key,flag);
+			}
+			else
+			{
+				search(root->right,key,flag);
+			}
+		}
+		void inorder(node*temp)
+		{
+			if(temp!=NULL)
+			{
+				inorder(temp->left);
+				cout<<temp->data<<"\t";
+				inorder(temp->right);
+			}
+		}
+		void display(){
+			cout<<"\t\t BST TREE \t\t\n";
+			if(root!=NULL){
+				inorder(root);
+			}
+			
+		}
+		void min()
+		{
+			node*temp;
+			temp=root;
+			while(temp->left!=NULL){
+				temp=temp->left;
+			}
+			cout<<"\n\nMinimum value:"<<temp->data<<endl;
+		}
+		int height(node*temp)
+		{
+			if(temp==NULL)
+			{
+				return -1;
+			}
+			int hL=height(temp->left);
+			int hR=height(temp->right);
+			return max(hL,hR)+1;
+		}
+		
+	
+			void mirror(node *root){
+			node *temp1;
+			if(root!=NULL){
+				temp1=root->left;
+				root->left=root->right;
+				root->right=temp1;	
+				mirror(root->left);
+				mirror(root->right);
+			}
+		}
+			
+		
+};
+int main()
+{
+	BST ob;
+	ob.creation();
+	cout<<"\t\t***BST***\t\t\n";
+	ob.display();
+	int key, flag = 0;
+	char ch;
+	do{
+	
+				flag=0;
+                cout << "\nEnter the key to search: ";
+                cin >> key;
+                ob.search(ob.root, key, flag);
+                if (flag == 1) 
+				{
+                    cout << "Key is present.\n";
+                } 
+				else 
+				{
+                    cout << "Key is not present.\n";
+                }
+                cout<<"search more data(y/n) :";
+                cin>>ch;
+	
+	}while(ch=='y');
+	ob.min();
+	ob.mirror(ob.root);
+	cout<<"\nafter mirroring :"<<endl;
+	ob.inorder(ob.root);
+	int h=ob.height(ob.root);
+	cout<<"\nHeight of BST is :"<<h<<endl;
+	return 0;
+}
